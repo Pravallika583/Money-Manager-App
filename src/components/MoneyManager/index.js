@@ -38,36 +38,107 @@ class MoneyManager extends Component {
     this.setState({typeOption: event.target.value})
   }
 
+  // addTransaction = event => {
+  //   event.preventDefault()
+  //   const {titleInput, amountInput, typeOption} = this.state
+  //   const typeObject = transactionTypeOptions.find(
+  //     each => each.optionId === typeOption,
+  //   )
+  //   const newTransaction = {
+  //     id: uuid(),
+  //     title: titleInput,
+  //     amount: amountInput,
+  //     type: typeObject.displayText,
+  //   }
+  //   const amount = parseInt(amountInput)
+  //   if (typeOption === 'INCOME') {
+  //     this.setState(prevState => ({
+  //       incomeAmount: prevState.incomeAmount + amount,
+  //       balanceAmount: prevState.balanceAmount + amount,
+  //     }))
+  //   } else if (typeOption === 'EXPENSES') {
+  //     this.setState(prevState => ({
+  //       expensesAmount: prevState.expensesAmount + amount,
+  //       balanceAmount: prevState.balanceAmount - amount,
+  //     }))
+  //   }
+  //   this.setState(prevState => ({
+  //     transactionHistory: [...prevState.transactionHistory, newTransaction],
+  //     titleInput: '',
+  //     amountInput: '',
+  //     typeOption: 'INCOME',
+  //   }))
+  // }
+
   addTransaction = event => {
-    event.preventDefault()
-    const {titleInput, amountInput, typeOption} = this.state
-    const typeObject = transactionTypeOptions.find(
-      each => each.optionId === typeOption,
-    )
-    const newTransaction = {
-      id: uuid(),
-      title: titleInput,
-      amount: amountInput,
-      type: typeObject.displayText,
-    }
-    const amount = parseInt(amountInput)
+  event.preventDefault()
+
+  const {titleInput, amountInput, typeOption} = this.state
+  const typeObject = transactionTypeOptions.find(
+    each => each.optionId === typeOption
+  )
+
+  const newTransaction = {
+    id: uuid(),
+    title: titleInput,
+    amount: amountInput,
+    type: typeObject.displayText,
+  }
+
+  const amount = parseInt(amountInput)
+
+  this.setState(prevState => {
+    let incomeAmount = prevState.incomeAmount
+    let expensesAmount = prevState.expensesAmount
+    let balanceAmount = prevState.balanceAmount
+
     if (typeOption === 'INCOME') {
-      this.setState(prevState => ({
-        incomeAmount: prevState.incomeAmount + amount,
-        balanceAmount: prevState.balanceAmount + amount,
-      }))
+      incomeAmount += amount
+      balanceAmount += amount
     } else if (typeOption === 'EXPENSES') {
-      this.setState(prevState => ({
-        expensesAmount: prevState.expensesAmount + amount,
-        balanceAmount: prevState.balanceAmount - amount,
-      }))
+      expensesAmount += amount
+      balanceAmount -= amount
     }
-    this.setState(prevState => ({
+
+    return {
+      incomeAmount,
+      expensesAmount,
+      balanceAmount,
       transactionHistory: [...prevState.transactionHistory, newTransaction],
       titleInput: '',
       amountInput: '',
       typeOption: 'INCOME',
-    }))
+    }
+  })
+}
+
+
+  removeTransaction = transaction => {
+    const {transactionHistory} = this.state
+    const {id} = transaction
+    const updatedTransactions = transactionHistory.filter(
+      each => each.id !== id,
+    )
+    const deletedTransaction = transactionHistory.find(each => each.id === id)
+    const {amount, type} = deletedTransaction
+    const removeAmount = parseInt(amount)
+    const optionObject = transactionTypeOptions.find(
+      each => each.displayText === type,
+    )
+    const typeOption = optionObject.optionId
+    if (typeOption === 'INCOME') {
+      this.setState(prevState => ({
+        incomeAmount: prevState.incomeAmount - removeAmount,
+        balanceAmount: prevState.balanceAmount - removeAmount,
+         transactionHistory: updatedTransactions
+      }))
+    } else if (typeOption === 'EXPENSES') {
+      this.setState(prevState => ({
+        expensesAmount: prevState.expensesAmount - removeAmount,
+        balanceAmount: prevState.balanceAmount + removeAmount,
+         transactionHistory: updatedTransactions
+      }))
+    }
   }
 
   render() {
@@ -149,7 +220,11 @@ class MoneyManager extends Component {
 
             <ul className="history-body">
               {transactionHistory.map(each => (
-                <TransactionItem key={each.id} transaction={each} />
+                <TransactionItem
+                  key={each.id}
+                  transaction={each}
+                  removeTransaction={() => this.removeTransaction(each)}
+                />
               ))}
             </ul>
           </div>
