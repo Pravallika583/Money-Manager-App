@@ -1,0 +1,111 @@
+/* Write your CSS here */
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: 'Roboto';
+}
+
+.bg-container {
+  min-height: 100vh;
+  padding: 0px 40px 10px 40px;
+}
+
+.money-manager {
+  background-image: url('https://assets.ccbp.in/frontend/react-js/money-manager/money-manager-bg.png');
+  height: 25vh;
+  background-size: cover;
+  padding: 40px 20px;
+}
+.name {
+  margin-bottom: 10px;
+  color: #475569;
+}
+.text {
+  color: #7e858e;
+}
+.desc {
+  color: #0b69ff;
+}
+.transaction-history {
+  display: flex;
+  gap: 25px;
+}
+.transaction-container {
+  margin-top: 25px;
+  padding: 30px;
+  border-color: #7e858e;
+  border-style: solid;
+  border-width: 1px;
+  width: 35%;
+  display: flex;
+  flex-direction: column;
+}
+.heading {
+  color: #1e293b;
+  font-size: 24px;
+  margin-bottom: 12px;
+}
+.add-button {
+  background-color: #0b69ff;
+  border-radius: 8px;
+  border-width: 0px;
+  color: white;
+  padding: 6px 10px;
+  margin-top: 15px;
+}
+input {
+  margin: 15px 0px;
+  width: 80%;
+  height: 35px;
+  padding: 4px;
+}
+select {
+  margin: 15px 0px;
+  width: 80%;
+  height: 35px;
+  padding: 4px;
+}
+.history-container {
+  border-color: #7e858e;
+  border-style: solid;
+  border-width: 1px;
+  width: 65%;
+  margin-top: 25px;
+  padding: 30px;
+}
+.history-text {
+  font-size: 24px;
+  color: #1e293b;
+}
+@media screen and (max-width: 767px) {
+  .money-manager {
+    padding: 20px 20px;
+  }
+  .transaction-container {
+    width: 100%;
+  }
+  .history-container {
+    width: 100%;
+  }
+  .transaction-history {
+    display: flex;
+    flex-direction: column;
+  }
+}
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #ccc;
+}
+.history-body {
+  margin-top: 10px;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+.history-column {
+  flex: 1;
+  margin: 0;
+}
