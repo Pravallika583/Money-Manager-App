@@ -41,6 +41,9 @@
 .amount {
   color: #7e858e;
   font-size: 24px;
+  display: flex;
+  align-items: center;
+  gap:10px;
 }
 @media screen and (max-width: 767px) {
   .type {

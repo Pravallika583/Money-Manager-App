@@ -15,7 +15,10 @@ class MoneyDetails extends Component {
           />
           <div className="transaction-type">
             <p className="type-text">Your Balance</p>
-            <p className="amount">Rs {balanceAmount}</p>
+            <div className="amount">
+              <p>Rs</p>
+              <p data-testid="balanceAmount">{balanceAmount}</p>
+            </div>
           </div>
         </li>
         <li className="income-container type">
@@ -26,7 +29,10 @@ class MoneyDetails extends Component {
           />
           <div className="transaction-type">
             <p className="type-text">Your Income</p>
-            <p className="amount">Rs {incomeAmount}</p>
+            <div  className="amount">
+            <p>Rs</p>
+            <p data-testid="incomeAmount">{incomeAmount}</p>
+            </div>
           </div>
         </li>
         <li className="expenses-container type">
@@ -37,7 +43,10 @@ class MoneyDetails extends Component {
           />
           <div className="transaction-type">
             <p className="type-text">Your Expenses</p>
-            <p className="amount">Rs {expensesAmount}</p>
+            <div  className="amount">
+            <p>Rs</p>
+            <p data-testid="expensesAmount">{expensesAmount}</p>
+            </div>
           </div>
         </li>
       </ul>
